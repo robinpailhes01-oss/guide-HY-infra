@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Harmonie Yacht — Infrastructure IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050B18;--surface:#0A1628;--card:#0F1D35;--border:rgba(255,255,255,.06);--text:#E8E6E1;--muted:#8A8B8E;--gold:#D4A853;--gold-glow:rgba(212,168,83,.15);--green:#34D399;--blue:#60A5FA;--red:#F87171;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}::selection{background:var(--gold);color:var(--bg)}
+a{color:var(--gold);text-decoration:none}
+
+/* Grain overlay */
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+/* Layout */
+.container{max-width:1100px;margin:0 auto;padding:0 28px}
+section{padding:100px 0}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%);border-radius:50%}
+.hero-tag{display:inline-block;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,83,.25);padding:8px 20px;border-radius:40px;margin-bottom:32px}
+.hero h1{font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:500;line-height:1.1;margin-bottom:24px;max-width:800px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:18px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px}
+.hero-metrics{display:flex;gap:48px;flex-wrap:wrap}
+.metric{text-align:left}.metric .num{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--gold)}.metric .label{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* ===== SECTION TITLES ===== */
+.section-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:500;margin-bottom:20px;line-height:1.2}
+.section-desc{font-size:16px;color:var(--muted);max-width:600px;line-height:1.7}
+
+/* ===== BEFORE/AFTER ===== */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
+.compare-card{padding:36px;border-radius:16px;border:1px solid var(--border)}
+.compare-card.before{background:rgba(248,113,113,.04);border-color:rgba(248,113,113,.15)}
+.compare-card.after{background:rgba(52,211,153,.04);border-color:rgba(52,211,153,.15)}
+.compare-card h3{font-family:var(--serif);font-size:22px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.compare-card.before h3{color:var(--red)}.compare-card.after h3{color:var(--green)}
+.compare-item{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--muted);display:flex;align-items:center;gap:10px;line-height:1.5}
+.compare-item:last-child{border:none}
+.compare-item .icon{font-size:18px;flex-shrink:0}
+
+/* ===== AGENTS ===== */
+.agents-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.agent-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all .4s ease}
+.agent-card:hover{border-color:rgba(212,168,83,.3);transform:translateY(-2px)}
+.agent-card.full{grid-column:1/-1}
+.agent-status{position:absolute;top:20px;right:20px;width:10px;height:10px;border-radius:50%}
+.agent-status.active{background:var(--green);box-shadow:0 0 12px rgba(52,211,153,.4)}
+.agent-status.building{background:var(--gold);box-shadow:0 0 12px var(--gold-glow)}
+.agent-status.planned{background:var(--muted)}
+.agent-emoji{font-size:36px;margin-bottom:16px}
+.agent-name{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:6px}
+.agent-role{font-size:13px;color:var(--gold);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em}
+.agent-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.agent-features{list-style:none;font-size:13px;color:var(--text)}
+.agent-features li{padding:6px 0;display:flex;align-items:center;gap:8px}
+.agent-features li::before{content:'→';color:var(--gold);font-weight:600}
+
+/* ===== PIPELINE ===== */
+.pipeline{margin-top:48px}
+.pipe-step{display:flex;align-items:flex-start;gap:24px;padding:24px 0;border-bottom:1px solid var(--border)}
+.pipe-step:last-child{border:none}
+.pipe-num{font-family:var(--serif);font-size:36px;font-weight:600;color:rgba(212,168,83,.2);min-width:50px}
+.pipe-content h4{font-size:16px;font-weight:500;margin-bottom:6px}.pipe-content p{font-size:14px;color:var(--muted);line-height:1.6}
+.pipe-tool{display:inline-block;font-size:11px;background:var(--gold-glow);color:var(--gold);padding:3px 10px;border-radius:20px;margin-top:8px}
+
+/* ===== RESULTS ===== */
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center}
+.result-card .num{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--gold)}
+.result-card .label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+/* ===== STACK ===== */
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.stack-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px}
+.stack-icon{font-size:28px;flex-shrink:0}
+.stack-name{font-size:14px;font-weight:500}.stack-role{font-size:12px;color:var(--muted)}
+
+/* ===== CTA ===== */
+.cta{text-align:center;padding:120px 0;position:relative}
+.cta::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%)}
+.cta-btn{display:inline-block;font-family:var(--sans);font-size:15px;font-weight:500;color:var(--bg);background:var(--gold);padding:16px 40px;border-radius:50px;text-decoration:none;transition:all .3s ease;position:relative}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,83,.3)}
+
+/* Footer */
+footer{text-align:center;padding:40px 0;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+
+/* Responsive */
+@media(max-width:768px){
+  section{padding:60px 0}
+  .compare,.agents-grid{grid-template-columns:1fr}
+  .agent-card.full{grid-column:auto}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .stack-grid{grid-template-columns:1fr}
+  .hero-metrics{gap:28px}
+  .metric .num{font-size:30px}
+  .pipe-step{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag reveal">Infrastructure IA — Harmonie Yacht</div>
+    <h1 class="reveal">Une <em>équipe d'agents IA</em> qui gère vos clients, vos finances et vos relances</h1>
+    <p class="hero-sub reveal">Pendant que vous vivez, l'IA répond aux clients en moins de 5 secondes, classe vos dépenses par message vocal, et vous prévient quand il faut relancer un prospect.</p>
+    <div class="hero-metrics reveal">
+      <div class="metric"><div class="num">24/7</div><div class="label">Disponibilité commerciale</div></div>
+      <div class="metric"><div class="num">&lt;5s</div><div class="label">Temps de réponse client</div></div>
+      <div class="metric"><div class="num">4</div><div class="label">Agents IA actifs</div></div>
+      <div class="metric"><div class="num">~50€</div><div class="label">Coût mensuel total</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LE PROBLÈME -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Le constat</div>
+    <div class="section-title reveal">Un chef d'entreprise ne devrait pas passer<br>ses journées à répondre aux DM</div>
+    <div class="compare">
+      <div class="compare-card before reveal">
+        <h3>❌ Avant l'IA</h3>
+        <div class="compare-item"><span class="icon">⏰</span> 3-4h/jour à répondre aux messages Instagram</div>
+        <div class="compare-item"><span class="icon">📱</span> Réponses tardives = clients perdus</div>
+        <div class="compare-item"><span class="icon">📋</span> Pas de suivi structuré des prospects</div>
+        <div class="compare-item"><span class="icon">💸</span> Dépenses notées sur un coin de table</div>
+        <div class="compare-item"><span class="icon">🤷</span> Aucune relance — les prospects oublient</div>
+        <div class="compare-item"><span class="icon">📊</span> Aucune visibilité sur la trésorerie en temps réel</div>
+      </div>
+      <div class="compare-card after reveal">
+        <h3>✅ Avec l'IA</h3>
+        <div class="compare-item"><span class="icon">⚡</span> Réponse en 5 secondes, 24h/24, week-ends inclus</div>
+        <div class="compare-item"><span class="icon">🧠</span> L'IA se souvient de chaque conversation</div>
+        <div class="compare-item"><span class="icon">🔥</span> Chaque prospect est qualifié et suivi automatiquement</div>
+        <div class="compare-item"><span class="icon">🎤</span> "50€ de carburant" en vocal = classé dans la compta</div>
+        <div class="compare-item"><span class="icon">📅</span> Relance automatique 7 jours avant la date du client</div>
+        <div class="compare-item"><span class="icon">📱</span> Dashboard temps réel accessible sur téléphone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LES AGENTS IA -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">L'équipe IA</div>
+    <div class="section-title reveal">4 agents qui travaillent en permanence</div>
+    <p class="section-desc reveal">Chaque agent a un rôle précis. Ils communiquent entre eux et vous envoient uniquement ce qui nécessite votre attention.</p>
+    <div class="agents-grid">
+      <div class="agent-card reveal">
+        <div class="agent-status active"></div>
+        <div class="agent-emoji">💬</div>
+        <div class="agent-name">Léa</div>
+        <div class="agent-role">Commerciale IA</div>
+        <div class="agent-desc">Répond aux DM Instagram en temps réel, avec un ton naturel et chaleureux. Impossible de deviner que c'est une IA.</div>
+        <ul class="agent-features">
+          <li>Répond en &lt;5 secondes, jour et nuit</li>
+          <li>Se souvient de toute la conversation</li>
+          <li>Collecte la date, l'occasion, le budget</li>
+          <li>Qualifie le lead (chaud / tiède / froid)</li>
+          <li>Ignore les messages du propriétaire</li>
+          <li>Oriente vers la réservation au bon moment</li>
+        </ul>
+      </div>
+      <div class="agent-card reveal">
+        <div class="agent-status active"></div>
+        <div class="agent-emoji">📊</div>
+        <div class="agent-name">Analyste Financier</div>
+        <div class="agent-role">Comptable IA</div>
+        <div class="agent-desc">Reçoit vos dépenses et revenus par message texte ou photo sur Telegram. Classe tout automatiquement.</div>
+        <ul class="agent-features">
+          <li>"Dépense 45€ carburant" → classé en 2 secondes</li>
+          <li>Photo de facture + légende → enregistré</li>
+          <li>Catégorisation automatique intelligente</li>
+          <li>/treso → point trésorerie instantané</li>
+          <li>Transcription vocale (bientôt)</li>
+        </ul>
+      </div>
+      <div class="agent-card reveal">
+        <div class="agent-status active"></div>
+        <div class="agent-emoji">📅</div>
+        <div class="agent-name">Agent Relance</div>
+        <div class="agent-role">Suivi commercial IA</div>
+        <div class="agent-desc">Analyse les dates souhaitées des prospects et vous alerte quand c'est le moment de relancer.</div>
+        <ul class="agent-features">
+          <li>Scan quotidien des dates clients à 9h</li>
+          <li>Alerte 7-14 jours avant la date prévue</li>
+          <li>Suggestion de message de relance personnalisé</li>
+          <li>Prise en compte de l'occasion (anniversaire, etc.)</li>
+        </ul>
+      </div>
+      <div class="agent-card reveal">
+        <div class="agent-status active"></div>
+        <div class="agent-emoji">📋</div>
+        <div class="agent-name">Rapport Hebdo</div>
+        <div class="agent-role">Briefing automatique</div>
+        <div class="agent-desc">Chaque lundi matin à 8h, un rapport complet arrive sur votre téléphone : finance, leads, activité de la semaine.</div>
+        <ul class="agent-features">
+          <li>Revenus / dépenses / résultat de la semaine</li>
+          <li>Nombre de leads chauds et tièdes</li>
+          <li>Activité des conversations clients</li>
+          <li>Envoi automatique sur Telegram</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT ÇA MARCHE -->
+<section style="background:var(--surface)">
+  <div class="container">
+    <div class="section-label reveal">Comment ça marche</div>
+    <div class="section-title reveal">Le parcours d'un client, de A à Z</div>
+    <p class="section-desc reveal">Un prospect envoie un DM Instagram. Voici ce qui se passe en coulisse, en moins de 5 secondes.</p>
+    <div class="pipeline">
+      <div class="pipe-step reveal">
+        <div class="pipe-num">01</div>
+        <div class="pipe-content">
+          <h4>Le client envoie un DM Instagram</h4>
+          <p>"Bonjour, je cherche une nuit à bord pour l'anniversaire de ma femme en juin"</p>
+          <span class="pipe-tool">Instagram DM → ManyChat</span>
+        </div>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="pipe-num">02</div>
+        <div class="pipe-content">
+          <h4>Léa répond instantanément</h4>
+          <p>L'IA analyse le message, consulte l'historique de conversation, et répond avec un ton naturel et chaleureux. Elle collecte la date, l'occasion, et oriente vers la bonne formule.</p>
+          <span class="pipe-tool">n8n → Claude Sonnet → ManyChat</span>
+        </div>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="pipe-num">03</div>
+        <div class="pipe-content">
+          <h4>Le lead est qualifié et stocké</h4>
+          <p>Toutes les infos (date souhaitée, occasion, type d'intérêt, température du lead) sont extraites et stockées dans le CRM. Le lead passe de "froid" à "tiède" à "chaud" automatiquement.</p>
+          <span class="pipe-tool">Supabase CRM</span>
+        </div>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="pipe-num">04</div>
+        <div class="pipe-content">
+          <h4>Vous êtes alerté sur votre téléphone</h4>
+          <p>Dès qu'un lead est tiède ou chaud, une notification Telegram arrive avec le résumé : qui, quoi, quand, quel budget. Vous décidez si vous prenez le relais ou si Léa continue.</p>
+          <span class="pipe-tool">Telegram Bot</span>
+        </div>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="pipe-num">05</div>
+        <div class="pipe-content">
+          <h4>Relance automatique avant la date</h4>
+          <p>7 jours avant la date souhaitée du client, vous recevez une alerte avec une suggestion de message de relance personnalisé. Vous l'envoyez en un clic.</p>
+          <span class="pipe-tool">Agent Relance → Telegram</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Résultats concrets</div>
+    <div class="section-title reveal">Ce que ça change au quotidien</div>
+    <div class="results-grid">
+      <div class="result-card reveal"><div class="num">4h</div><div class="label">économisées par jour sur la gestion client</div></div>
+      <div class="result-card reveal"><div class="num">0</div><div class="label">prospect oublié grâce aux relances automatiques</div></div>
+      <div class="result-card reveal"><div class="num">100%</div><div class="label">des DM répondus, même à 3h du matin</div></div>
+      <div class="result-card reveal"><div class="num">~50€</div><div class="label">par mois pour toute l'infrastructure</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section style="background:var(--surface)">
+  <div class="container">
+    <div class="section-label reveal">Votre tableau de bord</div>
+    <div class="section-title reveal">Tout votre business sur un écran</div>
+    <p class="section-desc reveal">Un dashboard en temps réel accessible depuis votre téléphone. Leads, finances, statut des agents — tout est là.</p>
+    <div style="margin-top:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;overflow:hidden" class="reveal">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--gold)">10</div><div style="font-size:11px;color:var(--muted);margin-top:4px">LEADS</div></div>
+        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--green)">3</div><div style="font-size:11px;color:var(--muted);margin-top:4px">CHAUDS</div></div>
+        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--green)">0€</div><div style="font-size:11px;color:var(--muted);margin-top:4px">REVENUS</div></div>
+        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--red)">0€</div><div style="font-size:11px;color:var(--muted);margin-top:4px">DÉPENSES</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;padding:12px">Vue d'ensemble • Leads & CRM • Finances — Responsive mobile</div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">La stack technique</div>
+    <div class="section-title reveal">Des outils robustes, un coût maîtrisé</div>
+    <p class="section-desc reveal">Chaque outil est choisi pour sa fiabilité et son rapport qualité/prix. Pas de gadgets, que de l'efficacité.</p>
+    <div class="stack-grid">
+      <div class="stack-item reveal"><div class="stack-icon">🧠</div><div><div class="stack-name">Claude Sonnet</div><div class="stack-role">Cerveau IA des agents</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">⚡</div><div><div class="stack-name">n8n Cloud</div><div class="stack-role">Orchestration workflows</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🗄️</div><div><div class="stack-name">Supabase</div><div class="stack-role">Base de données CRM</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">📱</div><div><div class="stack-name">ManyChat</div><div class="stack-role">Passerelle Instagram DM</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🔔</div><div><div class="stack-name">Telegram</div><div class="stack-role">Alertes & commandes</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🚀</div><div><div class="stack-name">Vercel</div><div class="stack-role">Dashboard en ligne</div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="reveal">
+      <p style="font-size:14px;color:var(--muted)">Coût total de l'infrastructure : <span style="color:var(--gold);font-family:var(--serif);font-size:24px;font-weight:600">~50€/mois</span></p>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px">vs 2000-3000€/mois pour un employé à temps partiel</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="section-title reveal" style="font-size:clamp(28px,5vw,48px)">Envie de la même chose<br>pour votre business ?</div>
+    <p style="color:var(--muted);margin:20px 0 40px;font-size:16px" class="reveal">Cette infrastructure a été construite en une semaine.<br>Imaginez ce qu'on peut faire pour vous.</p>
+    <a href="https://instagram.com/robinai_consulting" target="_blank" class="cta-btn reveal">Discutons de votre projet →</a>
+  </div>
+</section>
+
+<footer><p>Harmonie Yacht × Robin Pailhes — Infrastructure IA © 2026</p></footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);obs.unobserve(e.target)}})},{threshold:.12});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
