@@ -2,378 +2,288 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Harmonie Yacht — Infrastructure IA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infrastructure IA pour Entrepreneurs — RobinAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050B18;--surface:#0A1628;--card:#0F1D35;--border:rgba(255,255,255,.06);--text:#E8E6E1;--muted:#8A8B8E;--gold:#D4A853;--gold-glow:rgba(212,168,83,.15);--green:#34D399;--blue:#60A5FA;--red:#F87171;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}::selection{background:var(--gold);color:var(--bg)}
-a{color:var(--gold);text-decoration:none}
+:root{--bg:#FAFAF7;--surface:#FFF;--ink:#111;--ink2:#555;--ink3:#999;--line:#E8E6E1;--warm:#F5F3EE;--serif:'Instrument Serif',Georgia,serif;--sans:'Satoshi',-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}::selection{background:#111;color:#fff}
 
-/* Grain overlay */
-body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+nav{position:fixed;top:0;left:0;right:0;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(250,250,247,.85);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:border .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+nav .logo{font-family:var(--serif);font-size:20px}
+nav .cta-nav{padding:10px 24px;background:var(--ink);color:#fff;border-radius:100px;font-size:13px;font-weight:500;text-decoration:none;transition:all .3s}
+nav .cta-nav:hover{background:#333;transform:translateY(-1px)}
 
-/* Layout */
-.container{max-width:1100px;margin:0 auto;padding:0 28px}
-section{padding:100px 0}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 24px 100px;max-width:860px;margin:0 auto}
+.hero-eyebrow{font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:32px}
+.hero h1{font-family:var(--serif);font-size:clamp(40px,6.5vw,80px);font-weight:400;line-height:1.08;letter-spacing:-.03em}
+.hero h1 em{font-style:italic}
+.hero-desc{font-size:18px;font-weight:300;color:var(--ink2);max-width:520px;margin:28px auto 0;line-height:1.7}
+.hero-numbers{display:flex;gap:56px;margin-top:56px;padding-top:40px;border-top:1px solid var(--line)}
+.hero-num .n{font-family:var(--serif);font-size:44px;letter-spacing:-.03em}
+.hero-num .l{font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
 
-/* Reveal animation */
-.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.reveal.visible{opacity:1;transform:translateY(0)}
+section{padding:100px 24px;max-width:900px;margin:0 auto;text-align:center}
+.s-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px}
+.s-title{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:400;line-height:1.15;letter-spacing:-.02em;max-width:700px;margin:0 auto}
+.s-desc{font-size:16px;font-weight:300;color:var(--ink2);line-height:1.7;max-width:520px;margin:16px auto 0}
+.divider{height:1px;background:var(--line);max-width:900px;margin:0 auto}
 
-/* ===== HERO ===== */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%);border-radius:50%}
-.hero-tag{display:inline-block;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,83,.25);padding:8px 20px;border-radius:40px;margin-bottom:32px}
-.hero h1{font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:500;line-height:1.1;margin-bottom:24px;max-width:800px}
-.hero h1 em{font-style:normal;color:var(--gold)}
-.hero-sub{font-size:18px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px}
-.hero-metrics{display:flex;gap:48px;flex-wrap:wrap}
-.metric{text-align:left}.metric .num{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--gold)}.metric .label{font-size:13px;color:var(--muted);margin-top:4px}
+/* PROBLEMS */
+.problems{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left}
+.problem{background:var(--bg);padding:36px}
+.problem .emoji{font-size:24px;margin-bottom:12px}
+.problem h4{font-size:16px;font-weight:500;margin-bottom:6px}
+.problem p{font-size:14px;color:var(--ink2);line-height:1.6;font-weight:300}
 
-/* ===== SECTION TITLES ===== */
-.section-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.section-title{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:500;margin-bottom:20px;line-height:1.2}
-.section-desc{font-size:16px;color:var(--muted);max-width:600px;line-height:1.7}
+/* SOLUTIONS */
+.solutions{display:flex;flex-direction:column;gap:0;margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.solution{display:grid;grid-template-columns:64px 1fr;gap:24px;align-items:start;padding:36px 40px;border-bottom:1px solid var(--line);text-align:left;background:var(--bg);transition:background .3s}
+.solution:last-child{border-bottom:none}
+.solution:hover{background:var(--warm)}
+.solution .num{font-family:var(--serif);font-size:36px;color:var(--ink3);line-height:1}
+.solution h4{font-size:16px;font-weight:500;margin-bottom:4px}
+.solution p{font-size:14px;color:var(--ink2);line-height:1.6;font-weight:300}
 
-/* ===== BEFORE/AFTER ===== */
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
-.compare-card{padding:36px;border-radius:16px;border:1px solid var(--border)}
-.compare-card.before{background:rgba(248,113,113,.04);border-color:rgba(248,113,113,.15)}
-.compare-card.after{background:rgba(52,211,153,.04);border-color:rgba(52,211,153,.15)}
-.compare-card h3{font-family:var(--serif);font-size:22px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.compare-card.before h3{color:var(--red)}.compare-card.after h3{color:var(--green)}
-.compare-item{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--muted);display:flex;align-items:center;gap:10px;line-height:1.5}
-.compare-item:last-child{border:none}
-.compare-item .icon{font-size:18px;flex-shrink:0}
+/* PROOF — screenshots */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.proof-item{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);transition:transform .3s}
+.proof-item:hover{transform:translateY(-2px)}
+.proof-item img{width:100%;height:auto;display:block}
+.proof-item .proof-placeholder{width:100%;aspect-ratio:4/3;background:var(--warm);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink3);flex-direction:column;gap:8px}
+.proof-item .proof-placeholder span{font-size:32px}
+.proof-caption{padding:16px 20px;font-size:13px;color:var(--ink2);font-weight:300;border-top:1px solid var(--line)}
+.proof-caption strong{font-weight:500;color:var(--ink)}
 
-/* ===== AGENTS ===== */
-.agents-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
-.agent-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all .4s ease}
-.agent-card:hover{border-color:rgba(212,168,83,.3);transform:translateY(-2px)}
-.agent-card.full{grid-column:1/-1}
-.agent-status{position:absolute;top:20px;right:20px;width:10px;height:10px;border-radius:50%}
-.agent-status.active{background:var(--green);box-shadow:0 0 12px rgba(52,211,153,.4)}
-.agent-status.building{background:var(--gold);box-shadow:0 0 12px var(--gold-glow)}
-.agent-status.planned{background:var(--muted)}
-.agent-emoji{font-size:36px;margin-bottom:16px}
-.agent-name{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:6px}
-.agent-role{font-size:13px;color:var(--gold);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em}
-.agent-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px}
-.agent-features{list-style:none;font-size:13px;color:var(--text)}
-.agent-features li{padding:6px 0;display:flex;align-items:center;gap:8px}
-.agent-features li::before{content:'→';color:var(--gold);font-weight:600}
+/* RESULTS */
+.results{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.result{background:var(--bg);padding:36px 24px;text-align:center}
+.result .val{font-family:var(--serif);font-size:40px;letter-spacing:-.03em}
+.result .lab{font-size:12px;color:var(--ink2);margin-top:4px;font-weight:300}
 
-/* ===== PIPELINE ===== */
-.pipeline{margin-top:48px}
-.pipe-step{display:flex;align-items:flex-start;gap:24px;padding:24px 0;border-bottom:1px solid var(--border)}
-.pipe-step:last-child{border:none}
-.pipe-num{font-family:var(--serif);font-size:36px;font-weight:600;color:rgba(212,168,83,.2);min-width:50px}
-.pipe-content h4{font-size:16px;font-weight:500;margin-bottom:6px}.pipe-content p{font-size:14px;color:var(--muted);line-height:1.6}
-.pipe-tool{display:inline-block;font-size:11px;background:var(--gold-glow);color:var(--gold);padding:3px 10px;border-radius:20px;margin-top:8px}
+/* TARGETS */
+.targets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:40px}
+.target-tag{padding:10px 22px;border:1px solid var(--line);border-radius:100px;font-size:14px;font-weight:400;color:var(--ink2);background:var(--surface);transition:all .3s}
+.target-tag:hover{border-color:var(--ink);color:var(--ink)}
 
-/* ===== RESULTS ===== */
-.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
-.result-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center}
-.result-card .num{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--gold)}
-.result-card .label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.4}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.step{background:var(--bg);padding:40px 32px;text-align:center}
+.step .step-num{font-size:11px;font-weight:700;color:var(--ink3);letter-spacing:.1em;margin-bottom:16px}
+.step h4{font-family:var(--serif);font-size:22px;font-weight:400;margin-bottom:8px}
+.step p{font-size:14px;color:var(--ink2);line-height:1.6;font-weight:300}
 
-/* ===== STACK ===== */
-.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-.stack-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px}
-.stack-icon{font-size:28px;flex-shrink:0}
-.stack-name{font-size:14px;font-weight:500}.stack-role{font-size:12px;color:var(--muted)}
+/* ABOUT */
+.about-card{max-width:640px;margin:56px auto 0;text-align:center}
+.about-avatar{width:100px;height:100px;border-radius:50%;background:var(--warm);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px}
+.about-name{font-family:var(--serif);font-size:28px;font-weight:400}
+.about-titles{font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.6}
+.about-bio{font-size:15px;color:var(--ink2);line-height:1.7;font-weight:300;margin-top:20px;max-width:480px;margin-left:auto;margin-right:auto}
+.about-bio strong{font-weight:500;color:var(--ink)}
+.about-links{display:flex;gap:12px;justify-content:center;margin-top:20px}
+.about-links a{font-size:13px;color:var(--ink2);text-decoration:none;padding:8px 16px;border:1px solid var(--line);border-radius:100px;transition:all .3s}
+.about-links a:hover{border-color:var(--ink);color:var(--ink)}
 
-/* ===== CTA ===== */
-.cta{text-align:center;padding:120px 0;position:relative}
-.cta::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%)}
-.cta-btn{display:inline-block;font-family:var(--sans);font-size:15px;font-weight:500;color:var(--bg);background:var(--gold);padding:16px 40px;border-radius:50px;text-decoration:none;transition:all .3s ease;position:relative}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,83,.3)}
+/* CTA */
+.cta{text-align:center;padding:140px 24px;max-width:700px;margin:0 auto}
+.cta h2{font-family:var(--serif);font-size:clamp(28px,4.5vw,52px);font-weight:400;line-height:1.15;letter-spacing:-.02em}
+.cta h2 em{font-style:italic}
+.cta p{font-size:16px;font-weight:300;color:var(--ink2);line-height:1.7;margin:20px auto 0;max-width:460px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;margin-top:36px;padding:16px 36px;background:var(--ink);color:#fff;border-radius:100px;font-size:15px;font-weight:500;text-decoration:none;transition:all .3s}
+.cta-btn:hover{background:#333;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.cta-sub{font-size:13px;color:var(--ink3);margin-top:14px}
 
-/* Footer */
-footer{text-align:center;padding:40px 0;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+footer{text-align:center;padding:40px;font-size:12px;color:var(--ink3);border-top:1px solid var(--line)}
 
-/* Responsive */
 @media(max-width:768px){
-  section{padding:60px 0}
-  .compare,.agents-grid{grid-template-columns:1fr}
-  .agent-card.full{grid-column:auto}
-  .results-grid{grid-template-columns:1fr 1fr}
-  .stack-grid{grid-template-columns:1fr}
-  .hero-metrics{gap:28px}
-  .metric .num{font-size:30px}
-  .pipe-step{flex-direction:column;gap:8px}
+  nav{padding:16px 20px}
+  .hero,.cta,section{padding-left:20px;padding-right:20px}
+  .hero{padding-top:120px;padding-bottom:60px}
+  .hero-numbers{flex-direction:column;gap:24px;align-items:center}
+  section{padding:60px 20px}
+  .problems,.results,.steps,.proof-grid{grid-template-columns:1fr}
+  .solution{grid-template-columns:48px 1fr;gap:16px;padding:28px 24px}
+  .cta{padding:80px 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-tag reveal">Infrastructure IA — Harmonie Yacht</div>
-    <h1 class="reveal">Une <em>équipe d'agents IA</em> qui gère vos clients, vos finances et vos relances</h1>
-    <p class="hero-sub reveal">Pendant que vous vivez, l'IA répond aux clients en moins de 5 secondes, classe vos dépenses par message vocal, et vous prévient quand il faut relancer un prospect.</p>
-    <div class="hero-metrics reveal">
-      <div class="metric"><div class="num">24/7</div><div class="label">Disponibilité commerciale</div></div>
-      <div class="metric"><div class="num">&lt;5s</div><div class="label">Temps de réponse client</div></div>
-      <div class="metric"><div class="num">4</div><div class="label">Agents IA actifs</div></div>
-      <div class="metric"><div class="num">~50€</div><div class="label">Coût mensuel total</div></div>
-    </div>
-  </div>
-</section>
+<nav id="nav">
+  <div class="logo">RobinAI</div>
+  <a href="https://wa.me/33619298284?text=Bonjour%20Robin%20!%20J%27aimerais%20en%20savoir%20plus%20sur%20l%27infrastructure%20IA." class="cta-nav" target="_blank">Discutons →</a>
+</nav>
 
-<!-- LE PROBLÈME -->
+<div class="hero">
+  <div class="hero-eyebrow">Infrastructure IA · Adaptable à votre entreprise</div>
+  <h1>Ne perdez plus de clients<br><em>par manque de temps</em></h1>
+  <p class="hero-desc">Vos prospects vous écrivent, mais vous ne pouvez pas répondre à tout, tout le temps. Et si une IA s'en occupait — pendant que vous vous concentrez sur votre métier ?</p>
+  <div class="hero-numbers">
+    <div class="hero-num"><div class="n">4h</div><div class="l">gagnées par jour</div></div>
+    <div class="hero-num"><div class="n">&lt;5s</div><div class="l">de réponse client</div></div>
+    <div class="hero-num"><div class="n">24/7</div><div class="l">toujours disponible</div></div>
+    <div class="hero-num"><div class="n">0</div><div class="l">embauche nécessaire</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <section>
-  <div class="container">
-    <div class="section-label reveal">Le constat</div>
-    <div class="section-title reveal">Un chef d'entreprise ne devrait pas passer<br>ses journées à répondre aux DM</div>
-    <div class="compare">
-      <div class="compare-card before reveal">
-        <h3>❌ Avant l'IA</h3>
-        <div class="compare-item"><span class="icon">⏰</span> 3-4h/jour à répondre aux messages Instagram</div>
-        <div class="compare-item"><span class="icon">📱</span> Réponses tardives = clients perdus</div>
-        <div class="compare-item"><span class="icon">📋</span> Pas de suivi structuré des prospects</div>
-        <div class="compare-item"><span class="icon">💸</span> Dépenses notées sur un coin de table</div>
-        <div class="compare-item"><span class="icon">🤷</span> Aucune relance — les prospects oublient</div>
-        <div class="compare-item"><span class="icon">📊</span> Aucune visibilité sur la trésorerie en temps réel</div>
-      </div>
-      <div class="compare-card after reveal">
-        <h3>✅ Avec l'IA</h3>
-        <div class="compare-item"><span class="icon">⚡</span> Réponse en 5 secondes, 24h/24, week-ends inclus</div>
-        <div class="compare-item"><span class="icon">🧠</span> L'IA se souvient de chaque conversation</div>
-        <div class="compare-item"><span class="icon">🔥</span> Chaque prospect est qualifié et suivi automatiquement</div>
-        <div class="compare-item"><span class="icon">🎤</span> "50€ de carburant" en vocal = classé dans la compta</div>
-        <div class="compare-item"><span class="icon">📅</span> Relance personnalisée en 2 clics, 7 jours avant la date du client</div>
-        <div class="compare-item"><span class="icon">📱</span> Dashboard temps réel accessible sur téléphone</div>
-      </div>
-    </div>
+  <div class="s-label">Votre quotidien</div>
+  <div class="s-title">Vous vous reconnaissez ?</div>
+  <div class="problems">
+    <div class="problem"><div class="emoji">😩</div><h4>Vous perdez des clients</h4><p>Un prospect vous écrit à 22h. Vous répondez le lendemain. Il est déjà allé voir ailleurs.</p></div>
+    <div class="problem"><div class="emoji">📋</div><h4>Vous oubliez de relancer</h4><p>Ce couple intéressé il y a 2 semaines ? Vous avez oublié de les recontacter.</p></div>
+    <div class="problem"><div class="emoji">🧮</div><h4>Votre comptabilité est floue</h4><p>Vous ne savez pas exactement combien vous avez gagné ou dépensé ce mois-ci.</p></div>
+    <div class="problem"><div class="emoji">🏃</div><h4>Vous faites tout, tout seul</h4><p>Commercial, comptable, community manager — vous jonglez sans arrêt.</p></div>
   </div>
 </section>
 
-<!-- LES AGENTS IA -->
+<div class="divider"></div>
+
 <section>
-  <div class="container">
-    <div class="section-label reveal">L'équipe IA</div>
-    <div class="section-title reveal">4 agents qui travaillent en permanence</div>
-    <p class="section-desc reveal">Chaque agent a un rôle précis. Ils communiquent entre eux et vous envoient uniquement ce qui nécessite votre attention.</p>
-    <div class="agents-grid">
-      <div class="agent-card reveal">
-        <div class="agent-status active"></div>
-        <div class="agent-emoji">💬</div>
-        <div class="agent-name">Léa</div>
-        <div class="agent-role">Commerciale IA</div>
-        <div class="agent-desc">Répond aux DM Instagram en temps réel, avec un ton naturel et chaleureux. Impossible de deviner que c'est une IA.</div>
-        <ul class="agent-features">
-          <li>Répond en &lt;5 secondes, jour et nuit</li>
-          <li>Se souvient de toute la conversation</li>
-          <li>Collecte la date, l'occasion, le budget</li>
-          <li>Qualifie le lead (chaud / tiède / froid)</li>
-          <li>Ignore les messages du propriétaire</li>
-          <li>Oriente vers la réservation au bon moment</li>
-        </ul>
-      </div>
-      <div class="agent-card reveal">
-        <div class="agent-status active"></div>
-        <div class="agent-emoji">📊</div>
-        <div class="agent-name">Analyste Financier</div>
-        <div class="agent-role">Comptable IA</div>
-        <div class="agent-desc">Reçoit vos dépenses et revenus par message texte ou photo sur Telegram. Classe tout automatiquement.</div>
-        <ul class="agent-features">
-          <li>"Dépense 45€ carburant" → classé en 2 secondes</li>
-          <li>Photo de facture + légende → enregistré</li>
-          <li>Catégorisation automatique intelligente</li>
-          <li>/treso → point trésorerie instantané</li>
-          <li>Transcription vocale (bientôt)</li>
-        </ul>
-      </div>
-      <div class="agent-card reveal">
-        <div class="agent-status active"></div>
-        <div class="agent-emoji">📅</div>
-        <div class="agent-name">Agent Relance</div>
-        <div class="agent-role">Suivi commercial IA</div>
-        <div class="agent-desc">Analyse les dates souhaitées des prospects et vous prévient quand c'est le moment de relancer. En 2 clics, le message part au client.</div>
-        <ul class="agent-features">
-          <li>Scan quotidien des dates clients à 9h</li>
-          <li>Alerte 7-14 jours avant la date prévue</li>
-          <li>Message de relance ultra-personnalisé (occasion, formule, ton)</li>
-          <li>Lien direct vers le DM Instagram du client</li>
-          <li>Copier le message → cliquer le lien → coller → terminé</li>
-        </ul>
-      </div>
-      <div class="agent-card reveal">
-        <div class="agent-status active"></div>
-        <div class="agent-emoji">📋</div>
-        <div class="agent-name">Rapport Hebdo</div>
-        <div class="agent-role">Briefing automatique</div>
-        <div class="agent-desc">Chaque lundi matin à 8h, un rapport complet arrive sur votre téléphone : finance, leads, activité de la semaine.</div>
-        <ul class="agent-features">
-          <li>Revenus / dépenses / résultat de la semaine</li>
-          <li>Nombre de leads chauds et tièdes</li>
-          <li>Activité des conversations clients</li>
-          <li>Envoi automatique sur Telegram</li>
-        </ul>
-      </div>
+  <div class="s-label">Ce que l'IA change</div>
+  <div class="s-title">Imaginez une équipe qui travaille pendant que vous dormez</div>
+  <div class="solutions">
+    <div class="solution">
+      <div class="num">01</div>
+      <div><h4>Vos clients reçoivent une réponse en 5 secondes</h4><p>Un agent IA répond à vos messages Instagram ou WhatsApp instantanément. Il connaît vos offres, vos disponibilités. Il qualifie chaque prospect naturellement.</p></div>
+    </div>
+    <div class="solution">
+      <div class="num">02</div>
+      <div><h4>Chaque prospect est suivi, scoré, relancé</h4><p>Tous vos leads dans un tableau de bord intelligent. Score sur 100. L'IA propose des messages de relance personnalisés. Vous validez, elle envoie.</p></div>
+    </div>
+    <div class="solution">
+      <div class="num">03</div>
+      <div><h4>Votre trésorerie se gère toute seule</h4><p>Import automatique de vos transactions bancaires. Catégorisation intelligente. Vos finances en un coup d'œil, sans saisie manuelle.</p></div>
+    </div>
+    <div class="solution">
+      <div class="num">04</div>
+      <div><h4>Vous êtes alerté uniquement quand ça compte</h4><p>Rapport hebdomadaire. Alertes métier. Notifications quand un lead devient chaud. Vous ne ratez plus aucune opportunité.</p></div>
+    </div>
+    <div class="solution">
+      <div class="num">05</div>
+      <div><h4>Vos clients sont pris en charge de A à Z</h4><p>Infos pratiques envoyées automatiquement. Feedback collecté après prestation. Demande d'avis Google. Professionnel, sans effort.</p></div>
     </div>
   </div>
 </section>
 
-<!-- COMMENT ÇA MARCHE -->
-<section style="background:var(--surface)">
-  <div class="container">
-    <div class="section-label reveal">Comment ça marche</div>
-    <div class="section-title reveal">Le parcours d'un client, de A à Z</div>
-    <p class="section-desc reveal">Un prospect envoie un DM Instagram. Voici ce qui se passe en coulisse, en moins de 5 secondes.</p>
-    <div class="pipeline">
-      <div class="pipe-step reveal">
-        <div class="pipe-num">01</div>
-        <div class="pipe-content">
-          <h4>Le client envoie un DM Instagram</h4>
-          <p>"Bonjour, je cherche une nuit à bord pour l'anniversaire de ma femme en juin"</p>
-          <span class="pipe-tool">Instagram DM → ManyChat</span>
-        </div>
-      </div>
-      <div class="pipe-step reveal">
-        <div class="pipe-num">02</div>
-        <div class="pipe-content">
-          <h4>Léa répond instantanément</h4>
-          <p>L'IA analyse le message, consulte l'historique de conversation, et répond avec un ton naturel et chaleureux. Elle collecte la date, l'occasion, et oriente vers la bonne formule.</p>
-          <span class="pipe-tool">n8n → Claude Sonnet → ManyChat</span>
-        </div>
-      </div>
-      <div class="pipe-step reveal">
-        <div class="pipe-num">03</div>
-        <div class="pipe-content">
-          <h4>Le lead est qualifié et stocké</h4>
-          <p>Toutes les infos (date souhaitée, occasion, type d'intérêt, température du lead) sont extraites et stockées dans le CRM. Le lead passe de "froid" à "tiède" à "chaud" automatiquement.</p>
-          <span class="pipe-tool">Supabase CRM</span>
-        </div>
-      </div>
-      <div class="pipe-step reveal">
-        <div class="pipe-num">04</div>
-        <div class="pipe-content">
-          <h4>Vous êtes alerté sur votre téléphone</h4>
-          <p>Dès qu'un lead est tiède ou chaud, une notification Telegram arrive avec le résumé : qui, quoi, quand, quel budget. Vous décidez si vous prenez le relais ou si Léa continue.</p>
-          <span class="pipe-tool">Telegram Bot</span>
-        </div>
-      </div>
-      <div class="pipe-step reveal">
-        <div class="pipe-num">05</div>
-        <div class="pipe-content">
-          <h4>Relance en 2 clics avant la date</h4>
-          <p>7 jours avant la date souhaitée du client, vous recevez sur Telegram : un résumé du client, un message de relance personnalisé prêt à copier, et un lien direct vers ses DM Instagram. Vous copiez, vous cliquez, vous collez — 10 secondes.</p>
-          <span class="pipe-tool">Agent Relance → Telegram → Instagram DM</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="divider"></div>
 
-<!-- DÉMO RELANCE -->
-<section style="background:var(--surface)">
-  <div class="container">
-    <div class="section-label reveal">En pratique</div>
-    <div class="section-title reveal">La relance d'un client en 10 secondes</div>
-    <p class="section-desc reveal">Voici exactement ce que le fondateur reçoit sur son téléphone chaque matin à 9h.</p>
-    <div style="margin-top:48px;max-width:420px;margin-left:auto;margin-right:auto" class="reveal">
-      <div style="background:#1a1a2e;border-radius:20px;overflow:hidden;border:1px solid var(--border)">
-        <div style="background:#0d0d1a;padding:14px 20px;text-align:center;font-size:14px;font-weight:500;border-bottom:1px solid var(--border)">Harmonie Director — Telegram</div>
-        <div style="padding:16px">
-          <div style="background:#1e293b;border-radius:12px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.6">
-            <div style="color:var(--gold);font-weight:500;margin-bottom:8px">📋 RELANCES DU JOUR — 2 leads</div>
-            <div style="color:var(--muted);font-size:12px">Pour chaque lead :<br>1️⃣ Copie le message<br>2️⃣ Clique le lien Instagram<br>3️⃣ Colle et envoie</div>
-          </div>
-          <div style="background:#1e293b;border-radius:12px;padding:14px;margin-bottom:6px;font-size:13px;line-height:1.6">
-            <span style="color:var(--red)">🔴</span> <strong>Avilo</strong><br>
-            <span style="color:var(--muted)">📅 Nuit Prestige le 16 mai — à confirmer</span><br>
-            <span style="color:var(--blue)">🔗 <u>Ouvrir le DM Instagram</u></span>
-          </div>
-          <div style="background:#2a3a52;border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.6;border-left:3px solid var(--gold)">
-            Hey Avilo ! Le 16 mai arrive vite pour ta nuit Prestige, on finalise ? On peut prévoir quelques surprises 🌊✨
-          </div>
-          <div style="background:#1e293b;border-radius:12px;padding:14px;margin-bottom:6px;font-size:13px;line-height:1.6">
-            <span style="color:var(--gold)">🟡</span> <strong>Next</strong><br>
-            <span style="color:var(--muted)">📅 Sortie amis 15 juin — durée à définir</span><br>
-            <span style="color:var(--blue)">🔗 <u>Ouvrir le DM Instagram</u></span>
-          </div>
-          <div style="background:#2a3a52;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;border-left:3px solid var(--gold)">
-            Salut ! Le 15 juin approche pour ta sortie entre amis 🌅 Tu penches plutôt 3h détente ou soirée complète ?
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">Long press → Copier → Clic lien → Coller → Envoyé ✅</div>
-    </div>
-  </div>
-</section>
-
-<!-- RÉSULTATS -->
+<!-- PROOF — captures d'écran réelles -->
 <section>
-  <div class="container">
-    <div class="section-label reveal">Résultats concrets</div>
-    <div class="section-title reveal">Ce que ça change au quotidien</div>
-    <div class="results-grid">
-      <div class="result-card reveal"><div class="num">4h</div><div class="label">économisées par jour sur la gestion client</div></div>
-      <div class="result-card reveal"><div class="num">0</div><div class="label">prospect oublié grâce aux relances automatiques</div></div>
-      <div class="result-card reveal"><div class="num">100%</div><div class="label">des DM répondus, même à 3h du matin</div></div>
-      <div class="result-card reveal"><div class="num">~50€</div><div class="label">par mois pour toute l'infrastructure</div></div>
+  <div class="s-label">La preuve</div>
+  <div class="s-title">Ça fonctionne — en voici la preuve</div>
+  <div class="s-desc">Captures d'écran réelles de mon infrastructure en production sur Harmonie Yacht.</div>
+  <div class="proof-grid">
+    <div class="proof-item">
+      <img src="screenshot-lea.png" alt="Conversation agent IA Léa sur Instagram" style="width:100%;height:auto;display:block">
+      <div class="proof-caption"><strong>Agent Léa en action</strong> — Une vraie cliente qualifiée en 3 messages. Date, occasion, formule — tout est collecté automatiquement.</div>
+    </div>
+    <div class="proof-item">
+      <img src="screenshot-dashboard.png" alt="Dashboard CRM avec scoring des leads" style="width:100%;height:auto;display:block">
+      <div class="proof-caption"><strong>Dashboard CRM</strong> — Score sur 100, température, historique. Chaque lead est suivi en temps réel.</div>
+    </div>
+    <div class="proof-item">
+      <img src="screenshot-telegram.png" alt="Notifications Telegram alertes et relances" style="width:100%;height:auto;display:block">
+      <div class="proof-caption"><strong>Alertes Telegram</strong> — Météo, leads chauds, relances, rapport hebdo. Tout arrive sur votre téléphone.</div>
+    </div>
+    <div class="proof-item">
+      <img src="screenshot-meteo.png" alt="Alertes météo croisées avec le calendrier" style="width:100%;height:auto;display:block">
+      <div class="proof-caption"><strong>Alertes intelligentes</strong> — Croisement météo × agenda. Opportunités détectées, risques signalés automatiquement.</div>
     </div>
   </div>
 </section>
 
-<!-- DASHBOARD -->
-<section style="background:var(--surface)">
-  <div class="container">
-    <div class="section-label reveal">Votre tableau de bord</div>
-    <div class="section-title reveal">Tout votre business sur un écran</div>
-    <p class="section-desc reveal">Un dashboard en temps réel accessible depuis votre téléphone. Leads, finances, statut des agents — tout est là.</p>
-    <div style="margin-top:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;overflow:hidden" class="reveal">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
-        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--gold)">10</div><div style="font-size:11px;color:var(--muted);margin-top:4px">LEADS</div></div>
-        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--green)">3</div><div style="font-size:11px;color:var(--muted);margin-top:4px">CHAUDS</div></div>
-        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--green)">0€</div><div style="font-size:11px;color:var(--muted);margin-top:4px">REVENUS</div></div>
-        <div style="background:var(--bg);padding:16px;border-radius:10px;text-align:center"><div style="font-family:var(--serif);font-size:28px;color:var(--red)">0€</div><div style="font-size:11px;color:var(--muted);margin-top:4px">DÉPENSES</div></div>
-      </div>
-      <div style="font-size:12px;color:var(--muted);text-align:center;padding:12px">Vue d'ensemble • Leads & CRM • Finances — Responsive mobile</div>
-    </div>
-  </div>
-</section>
+<div class="divider"></div>
 
-<!-- STACK -->
 <section>
-  <div class="container">
-    <div class="section-label reveal">La stack technique</div>
-    <div class="section-title reveal">Des outils robustes, un coût maîtrisé</div>
-    <p class="section-desc reveal">Chaque outil est choisi pour sa fiabilité et son rapport qualité/prix. Pas de gadgets, que de l'efficacité.</p>
-    <div class="stack-grid">
-      <div class="stack-item reveal"><div class="stack-icon">🧠</div><div><div class="stack-name">Claude Sonnet</div><div class="stack-role">Cerveau IA des agents</div></div></div>
-      <div class="stack-item reveal"><div class="stack-icon">⚡</div><div><div class="stack-name">n8n Cloud</div><div class="stack-role">Orchestration workflows</div></div></div>
-      <div class="stack-item reveal"><div class="stack-icon">🗄️</div><div><div class="stack-name">Supabase</div><div class="stack-role">Base de données CRM</div></div></div>
-      <div class="stack-item reveal"><div class="stack-icon">📱</div><div><div class="stack-name">ManyChat</div><div class="stack-role">Passerelle Instagram DM</div></div></div>
-      <div class="stack-item reveal"><div class="stack-icon">🔔</div><div><div class="stack-name">Telegram</div><div class="stack-role">Alertes & commandes</div></div></div>
-      <div class="stack-item reveal"><div class="stack-icon">🚀</div><div><div class="stack-name">Vercel</div><div class="stack-role">Dashboard en ligne</div></div></div>
+  <div class="s-label">Résultats concrets</div>
+  <div class="s-title">Ce qu'obtiennent les entrepreneurs équipés</div>
+  <div class="results">
+    <div class="result"><div class="val">4h</div><div class="lab">économisées chaque jour</div></div>
+    <div class="result"><div class="val">×3</div><div class="lab">plus de leads qualifiés</div></div>
+    <div class="result"><div class="val">0</div><div class="lab">prospect oublié</div></div>
+    <div class="result"><div class="val">24/7</div><div class="lab">réponse instantanée</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="s-label">Pour qui</div>
+  <div class="s-title">Si vous recevez des demandes clients et que vous gérez des réservations</div>
+  <div class="s-desc">Chaque infrastructure est personnalisée selon votre activité.</div>
+  <div class="targets">
+    <div class="target-tag">Restaurants</div>
+    <div class="target-tag">Hôtels & chambres d'hôtes</div>
+    <div class="target-tag">Locations saisonnières</div>
+    <div class="target-tag">Salons de beauté & spas</div>
+    <div class="target-tag">Coachs & consultants</div>
+    <div class="target-tag">Agences immobilières</div>
+    <div class="target-tag">Activités nautiques</div>
+    <div class="target-tag">Salles de sport</div>
+    <div class="target-tag">Photographes</div>
+    <div class="target-tag">Traiteurs & événementiel</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="s-label">Comment ça marche</div>
+  <div class="s-title">Opérationnel en une semaine</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">ÉTAPE 01</div>
+      <h4>On échange</h4>
+      <p>Vous me décrivez votre activité et comment vous gérez vos clients aujourd'hui.</p>
     </div>
-    <div style="text-align:center;margin-top:40px" class="reveal">
-      <p style="font-size:14px;color:var(--muted)">Coût total de l'infrastructure : <span style="color:var(--gold);font-family:var(--serif);font-size:24px;font-weight:600">~50€/mois</span></p>
-      <p style="font-size:13px;color:var(--muted);margin-top:4px">vs 2000-3000€/mois pour un employé à temps partiel</p>
+    <div class="step">
+      <div class="step-num">ÉTAPE 02</div>
+      <h4>Je construis</h4>
+      <p>En quelques jours, votre infrastructure IA sur mesure est en place et testée.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">ÉTAPE 03</div>
+      <h4>Ça tourne</h4>
+      <p>Votre IA gère vos clients, vos finances, vos relances. Vous reprenez votre temps.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
-  <div class="container">
-    <div class="section-title reveal" style="font-size:clamp(28px,5vw,48px)">Envie de la même chose<br>pour votre business ?</div>
-    <p style="color:var(--muted);margin:20px 0 40px;font-size:16px" class="reveal">Cette infrastructure a été construite en une semaine.<br>Imaginez ce qu'on peut faire pour vous.</p>
-    <a href="https://instagram.com/robinai_consulting" target="_blank" class="cta-btn reveal">Discutons de votre projet →</a>
+<div class="divider"></div>
+
+<section>
+  <div class="s-label">Qui suis-je</div>
+  <div class="about-card">
+    <div class="about-avatar">⚓</div>
+    <div class="about-name">Robin Pailhes</div>
+    <div class="about-titles">Fondateur, Harmonie Yacht · Consultant IA</div>
+    <p class="about-bio">Je suis <strong>gérant d'Harmonie Yacht</strong>, location de yacht de luxe à Montpellier. J'ai construit cette infrastructure IA pour mon propre business — et les résultats ont tout changé. Aujourd'hui, <strong>je mets en place la même chose pour d'autres entrepreneurs</strong>. Du concret, en production, que j'utilise moi-même au quotidien.</p>
+    <div class="about-links">
+      <a href="https://instagram.com/robinpailhes" target="_blank">@robinpailhes</a>
+      <a href="https://instagram.com/robinai_consulting" target="_blank">@robinai_consulting</a>
+      <a href="https://wa.me/33619298284" target="_blank">WhatsApp</a>
+    </div>
   </div>
 </section>
 
-<footer><p>Harmonie Yacht × Robin Pailhes — Infrastructure IA © 2026</p></footer>
+<div class="divider"></div>
+
+<div class="cta">
+  <h2>Prêt à reprendre le contrôle<br><em>de votre temps ?</em></h2>
+  <p>Discutons 15 minutes de votre activité. Je vous dis exactement ce qu'on peut automatiser — et ce que ça change pour vous.</p>
+  <a href="https://wa.me/33619298284?text=Bonjour%20Robin%20!%20J%27aimerais%20en%20savoir%20plus%20sur%20l%27infrastructure%20IA%20pour%20mon%20entreprise." class="cta-btn" target="_blank">💬 Discutons sur WhatsApp →</a>
+  <div class="cta-sub">Robin Pailhes · Réponse en moins de 24h</div>
+</div>
+
+<footer>RobinAI Consulting · Infrastructure IA sur mesure · 2026</footer>
 
 <script>
-const reveals=document.querySelectorAll('.reveal');
-const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);obs.unobserve(e.target)}})},{threshold:.12});
-reveals.forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20)});
 </script>
 </body>
 </html>
